@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define M 3 // Righe
-#define N 4 // Colonne
 //#define DEBUG // Commentare per eliminare gli output di debug
 
 /**
@@ -18,19 +16,30 @@
  *      prima riga
 */
 
-void richiediMatrice(float[M][N]);
-void mostraMatrice(float[M][N], int, int, int);
-void metodoDiGauss(float[M][N], int, int);
-void trovaPivot(float[M][N], int[M][2], int, int);
-void ordinaMatricePerPivot(float[M][N], int[M][2]);
+void richiediMatrice(int m, int n, float matrice[m][n]);
+void mostraMatrice(int m, int n, float matrice[m][n], int tab, int startN, int startM);
+void metodoDiGauss(int m, int n, float matrice[m][n], int startM, int startN);
+void trovaPivot(int m, int n, float matrice[m][n], int pivot[m][2], int startM, int startN);
+void ordinaMatricePerPivot(int m, int n, float matrice[m][n], int pivot[m][2]);
 
 int main(int argc, char const *argv[]) {
     #ifndef DEBUG
-        float matrice[M][N];
+        int m; // Righe
+        int n; // Colonne
+
+        // Richiedo la dimensione della matrice
+        printf("Insersci il numero di righe della matrice: ");
+        scanf("%d", &m);
+        printf("Insersci il numero di colonne della matrice: ");
+        scanf("%d", &n);
+
+        float matrice[m][n];
     #endif
 
     #ifdef DEBUG
-        float matrice[M][N] = {
+        int m = 3; // Righe
+        int n = 4; // Colonne
+        float matrice[m][n] = {
             {1, 2, -1, -3},
             {2, 0, -1, -1},
             {1, -1, 1, -2}
@@ -39,35 +48,35 @@ int main(int argc, char const *argv[]) {
 
     #ifndef DEBUG
         // Richiedo tutti i parametri della matrice all'utente
-        richiediMatrice(matrice);
+        richiediMatrice(m, n, matrice);
     #endif
 
     // Mostro la matrice di partenza
     printf("Matrice di partenza\n");
-    mostraMatrice(matrice, 0, -1, -1);
+    mostraMatrice(m, n, matrice, 0, -1, -1);
 
     // Eseguo il metodo di Gauss
-    metodoDiGauss(matrice, 0, 0);
+    metodoDiGauss(m, n, matrice, 0, 0);
 
     // Mostro la matrice
     printf("Matrice portata a scala\n");
-    mostraMatrice(matrice, 0, -1, -1);
+    mostraMatrice(m, n, matrice, 0, -1, -1);
 
     return 0;
 }
 
 // Richiede all'utente di inserire tutti gli elementi della matrice
-void richiediMatrice(float matrice[M][N]) {
+void richiediMatrice(int m, int n, float matrice[m][n]) {
     int i, j;
 
-    printf("Preparati ad inserire gli elementi del vettore (%d, %d)\n", M, N);
+    printf("Preparati ad inserire gli elementi del vettore (%d, %d)\n", m, n);
 
     // Per ogni vettore riga
-    for(i = 0; i < M; i++) {
+    for(i = 0; i < m; i++) {
         printf("Riga n %d\n", i + 1);
 
         // Richiedo ciascun parametro
-        for(j = 0; j < N; j++) {
+        for(j = 0; j < n; j++) {
             printf("\tInserisci il parametro n %d: ", j + 1);
             scanf("%f", &matrice[i][j]);
         }
@@ -75,28 +84,24 @@ void richiediMatrice(float matrice[M][N]) {
 }
 
 // Mostra gli elementi della matrice nel terminale
-void mostraMatrice(float matrice[M][N], int tab, int startM, int startN) {
+void mostraMatrice(int m, int n, float matrice[m][n], int tab, int startN, int startM) {
     int i, j, t;
 
     // Mostro ciascun vettore riga
-    for(i = 0; i < M; i++) {
+    for(i = 0; i < m; i++) {
         for(t = 0; t < tab; t++) printf("\t");
 
         // Simboli per l'apertura della matrice
-        switch(i) {
-            case 0:
-                printf("\033[0;32m┌\033[0m");
-                break;
-            case M - 1:
-                printf("\033[0;32m└\033[0m");
-                break;
-            default:
-                printf("\033[0;32m|\033[0m");
-                break;
+        if(i == 0) {
+            printf("\033[0;32m┌\033[0m");
+        } else if(i == m - 1) {
+            printf("\033[0;32m└\033[0m");
+        } else {
+            printf("\033[0;32m|\033[0m");
         }
 
         // Mostro ciascun parametro
-        for(j = 0; j < N; j++) {
+        for(j = 0; j < n; j++) {
             // Evidenzio il carattere se succede alle coordinate indicate
             if(i >= startM && j >= startN) printf("\033[0;33m");
 
@@ -105,21 +110,17 @@ void mostraMatrice(float matrice[M][N], int tab, int startM, int startN) {
             // Reimposto il colore se modificato
             if(i >= startM && j >= startN) printf("\033[0m");
 
-            if(j < N - 1) printf(",");
+            if(j < n - 1) printf(",");
             printf("\t");
         }
 
         // Simboli per la chiusura della matrice
-        switch(i) {
-            case 0:
-                printf("\033[0;32m┐\033[0m");
-                break;
-            case M - 1:
-                printf("\033[0;32m┘\033[0m");
-                break;
-            default:
-                printf("\033[0;32m|\033[0m");
-                break;
+        if(i == 0) {
+            printf("\033[0;32m┐\033[0m");
+        } else if(i == m - 1) {
+            printf("\033[0;32m┘\033[0m");
+        } else {
+            printf("\033[0;32m|\033[0m");
         }
 
         printf("\n");
@@ -129,10 +130,10 @@ void mostraMatrice(float matrice[M][N], int tab, int startM, int startN) {
 
 // Esegue il metodo di Gauss trasformando la matrice in una matrice a scala
 // (si aspetta una matrice con pivot ordinati)
-void metodoDiGauss(float matrice[M][N], int startM, int startN) {
+void metodoDiGauss(int m, int n, float matrice[m][n], int startM, int startN) {
     // Controllo i valori di startM e startN per vedere se il procedimento è finito
-    if(startM < M && startN < N)  {
-        int i, j, pivot[M][2];
+    if(startM < m && startN < n)  {
+        int i, j, pivot[m][2];
         float coeff;
 
         #ifdef DEBUG
@@ -142,10 +143,10 @@ void metodoDiGauss(float matrice[M][N], int startM, int startN) {
         // 1: Si ordinano le righe per la posizione dei propri pivot
 
         // 1.1: Recupero i pivot
-        trovaPivot(matrice, pivot, startM, startN);
+        trovaPivot(m, n, matrice, pivot, startM, startN);
 
         // 1.2: Ordino la matrice in base ai pivot
-        ordinaMatricePerPivot(matrice, pivot);
+        ordinaMatricePerPivot(m, n, matrice, pivot);
 
         #ifdef DEBUG
             printf("\tMatrice di partenza\n");
@@ -169,9 +170,9 @@ void metodoDiGauss(float matrice[M][N], int startM, int startN) {
         // la prima riga  moltiplicata per  –aij/a1j, in tal modo tutte le righe, eccetto la prima,
         // hanno tutti 0 nella colonna j (e tutte le righe hanno 0 nelle colonne h con h<j)
         
-        for(i = startM + 1; i < M; i++) {
+        for(i = startM + 1; i < m; i++) {
             coeff = - matrice[i][startN] / matrice[startM][startN];
-            for(j = startN; j < N; j++) {
+            for(j = startN; j < n; j++) {
                 matrice[i][j] += matrice[startM][j] * coeff;
             }
 
@@ -186,45 +187,45 @@ void metodoDiGauss(float matrice[M][N], int startM, int startN) {
         #endif
 
         // 3: Proseguo con la ricorsione spostandomi di una colonna e di una riga
-        metodoDiGauss(matrice, startM + 1, startN + 1);
+        metodoDiGauss(m, n, matrice, startM + 1, startN + 1);
     }
 }
 
 // Permette di trovare il pivot di una data riga
-void trovaPivot(float matrice[M][N], int pivot[M][2], int startM, int startN) {
+void trovaPivot(int m, int n, float matrice[m][n], int pivot[m][2], int startM, int startN) {
     int i, j;
 
     // Inizializzo la matrice di pivot a 0
-    for(i = 0; i < M; i++) {
+    for(i = 0; i < m; i++) {
        pivot[i][0] = 0;
        pivot[i][1] = 0;
     }
 
     // Recupero i pivot
-    for(i = startM; i < M; i++) {
+    for(i = startM; i < n; i++) {
         pivot[i][0] = -1;
         pivot[i][1] = i;
 
         // Trovo la colonna del pivot controllando, nella riga specificata,
         // il valore di ciasuna colonna in ordine crescente
-        for(j = startN; j < N; j++) {
+        for(j = startN; j < n; j++) {
             if(matrice[i][j]) {
                 pivot[i][0] = j;
-                j = N;
+                j = n;
             }
         }
     }
 }
 
 // Ordinamento dei pivot
-void ordinaMatricePerPivot(float matrice[M][N], int pivot[M][2]) {
+void ordinaMatricePerPivot(int m, int n, float matrice[m][n], int pivot[m][2]) {
     int i, j, k, max[2] = {0};
     int pivot0, pivot1;
     int elementoMatrice;
 
     // Ordino la matrice in base ai pivot
-    for(int i = 0; i < M; i++) {
-        for(int j = i + 1; j < M; j++){
+    for(int i = 0; i < m; i++) {
+        for(int j = i + 1; j < m; j++){
             if(pivot[i][0] > pivot[j][0]) {
                 // Pivot
                 pivot0 = pivot[i][0];
@@ -237,7 +238,7 @@ void ordinaMatricePerPivot(float matrice[M][N], int pivot[M][2]) {
                 pivot[j][1] = pivot1;
 
                 // Matrice
-                for(k = 0; k < N; k++) {
+                for(k = 0; k < n; k++) {
                     elementoMatrice = matrice[i][k];
                     matrice[i][k] = matrice[j][k];
                     matrice[j][k] = elementoMatrice;
