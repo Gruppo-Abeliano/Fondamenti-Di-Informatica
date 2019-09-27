@@ -1,2 +1,4 @@
+#!/bin/bash
+
 FILE_PATH=$1
 clear && gcc $1 -o ./${FILE_PATH%/*}/compiled && ./${FILE_PATH%/*}/compiled
