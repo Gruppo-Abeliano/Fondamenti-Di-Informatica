@@ -4,7 +4,7 @@
 void richiediMatrice(int m, int n, float matrice[m][n]);
 void mostraMatrice(int m, int n, float matrice[m][n], int tab, int startN, int startM);
 void metodoDiGauss(int m, int n, float matrice[m][n], int startM, int startN);
-void trovaPivot(int m, int n, float matrice[m][n], int pivot[m][2], int startM, int startN);
-void ordinaMatricePerPivot(int m, int n, float matrice[m][n], int pivot[m][2]);
+void trovaPivot(int m, int n, float matrice[m][n], int startM, int startN, int pivot[m - startM][2]);
+void ordinaMatricePerPivot(int m, int n, float matrice[m][n], int startM, int pivot[m - startM][2]);
 
 #endif
