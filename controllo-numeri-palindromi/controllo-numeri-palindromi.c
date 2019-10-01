@@ -11,7 +11,7 @@ int main(int argc, char const *argv[])
     int numeroDaControllare;
     int cifre;
     int quoziente;
-    int i, j;
+    int i;
     int cifra1, cifra2;
     int palindromo = 1; // Assumo che il numero sia palindromo (vedi dopo)
 
