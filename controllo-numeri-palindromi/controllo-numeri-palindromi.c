@@ -1,15 +1,17 @@
 #include <stdio.h>
-#include <math.h>
 
 // Permette di ottenere la cifra di un numero in una data posizione (contando a partire da 0 come gli array)
 int ottieniCifra(int numero, int n, int cifre);
+
+// Permette di calcolare la potenza di un numero intero
+int pot(int n, int e);
 
 int main(int argc, char const *argv[])
 {
     int numeroDaControllare;
     int cifre;
     int quoziente;
-    int i, j; // Usate per i cicli
+    int i, j;
     int cifra1, cifra2;
     int palindromo = 1; // Assumo che il numero sia palindromo (vedi dopo)
 
@@ -34,6 +36,9 @@ int main(int argc, char const *argv[])
         // appena non lo sono fermo il ciclo e imposto il numero come non palindromo
         cifra1 = ottieniCifra(numeroDaControllare, i, cifre);
         cifra2 = ottieniCifra(numeroDaControllare, cifre - i - 1, cifre);
+
+        printf("%d %d %d %d\n", i, cifre - i - 1, cifra1, cifra2);
+
         if(cifra1 != cifra2) {
             printf("Cifra diverse, fine\n");
             i = cifre; // In questo modo fermo il ciclo
@@ -57,5 +62,22 @@ int ottieniCifra(int numero, int n, int cifre)
     // Per ottenere la cifra in posizione n
     // divido il numero per 10^(cifre - n - 1)
     // e calcolo il modulo per ottenere solo la cifra
-    return (numero / (int) pow(10, cifre - n - 1)) % 10;
+    printf("%d\n", pot(10, cifre - n - 1));
+    return (numero / (int) pot(10, cifre - n - 1)) % 10;
+}
+
+int pot(int n, int e)
+{
+    int i;
+
+    printf("pot %d", n);
+
+    for(i = 1; i < e; i++)
+    {
+        n *= n;
+    }
+
+    printf("^%d = %d\n", e, n);
+
+    return n;
 }
