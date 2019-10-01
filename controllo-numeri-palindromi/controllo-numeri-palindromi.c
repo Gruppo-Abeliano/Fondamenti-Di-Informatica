@@ -54,5 +54,8 @@ int main(int argc, char const *argv[])
 
 int ottieniCifra(int numero, int n, int cifre)
 {
+    // Per ottenere la cifra in posizione n
+    // divido il numero per 10^(cifre - n - 1)
+    // e calcolo il modulo per ottenere solo la cifra
     return (numero / (int) pow(10, cifre - n - 1)) % 10;
 }
