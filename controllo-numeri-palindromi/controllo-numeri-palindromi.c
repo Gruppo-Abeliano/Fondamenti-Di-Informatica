@@ -3,8 +3,8 @@
 // Permette di ottenere la cifra di un numero in una data posizione (contando a partire da 0 come gli array)
 int ottieniCifra(int numero, int n, int cifre);
 
-// Permette di calcolare la potenza di un numero intero
-int pot(int n, int e);
+// Permette di calcolare la potenza e di 10
+int pot(int e);
 
 int main(int argc, char const *argv[])
 {
@@ -36,15 +36,10 @@ int main(int argc, char const *argv[])
         // appena non lo sono fermo il ciclo e imposto il numero come non palindromo
         cifra1 = ottieniCifra(numeroDaControllare, i, cifre);
         cifra2 = ottieniCifra(numeroDaControllare, cifre - i - 1, cifre);
-
-        printf("%d %d %d %d\n", i, cifre - i - 1, cifra1, cifra2);
-
         if(cifra1 != cifra2) {
-            printf("Cifra diverse, fine\n");
             i = cifre; // In questo modo fermo il ciclo
             palindromo = 0;
         } else {
-            printf("Cifre uguali, proseguo\n");
         }
     }
 
@@ -62,22 +57,18 @@ int ottieniCifra(int numero, int n, int cifre)
     // Per ottenere la cifra in posizione n
     // divido il numero per 10^(cifre - n - 1)
     // e calcolo il modulo per ottenere solo la cifra
-    printf("%d\n", pot(10, cifre - n - 1));
-    return (numero / (int) pot(10, cifre - n - 1)) % 10;
+    return (numero / (int) pot(cifre - n - 1)) % 10;
 }
 
-int pot(int n, int e)
+int pot(int e)
 {
     int i;
+    int n = 1;
 
-    printf("pot %d", n);
-
-    for(i = 1; i < e; i++)
+    for(i = 0; i < e; i++)
     {
-        n *= n;
+        n *= 10;
     }
-
-    printf("^%d = %d\n", e, n);
 
     return n;
 }
