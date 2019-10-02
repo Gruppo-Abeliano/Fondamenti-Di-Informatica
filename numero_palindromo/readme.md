@@ -1,5 +1,6 @@
 # Numero palindromo
 Autore: Alberto Nidasio
+
 Scopo: Controlla se un numero è palindromo
 ## Descrizione:
 Questo programa controlla se un numero è palindromo confrontando

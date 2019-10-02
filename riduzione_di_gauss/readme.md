@@ -1,5 +1,6 @@
 # Metodo di riduzione di Gauss
 Autore: Alberto Nidasio
+
 Scopo: Eseguire la riduzione di Gauss
 ## Descrizione:
 Questo programma esegue il metodo della riduzione di Gauss
