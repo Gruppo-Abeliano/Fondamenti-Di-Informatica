@@ -3,10 +3,10 @@ CFLAGS=-Wall -Werror
 
 all: librarytest
 
-lib_riduzione_di_gauss.o: lib_riduzione_di_gauss.c riduzione_di_gauss.h
-	$(CC) $(CFLAGS) -c lib_riduzione_di_gauss.c
+lib_anagramma_numeri.o: lib_anagramma_numeri.c anagramma_numeri.h
+	$(CC) $(CFLAGS) -c lib_anagramma_numeri.c
 
-librarytest: librarytest.c lib_riduzione_di_gauss.o
+librarytest: librarytest.c lib_anagramma_numeri.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:

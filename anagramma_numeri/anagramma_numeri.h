@@ -4,6 +4,6 @@
 int ottieniNumeroCifre(int numero);
 int ottieniCifra(int numero, int n, int cifre);
 int pot(int e);
-int controllaPresenza(int numero, int cifra, int cifre);
+int contaCifra(int numero, int cifra, int cifre);
 
 #endif
