@@ -1,0 +1,1 @@
+clear && gcc contour_filling.c -o contour_filling && ./contour_filling
