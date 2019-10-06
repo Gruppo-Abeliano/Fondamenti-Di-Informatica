@@ -155,6 +155,7 @@ void pathSearch(matriceInt mat)
 
   clearScreen();
 
+  scelta:
   printf("\nScegli la posizione da cui partire indicandone le coordinate\n\n Inserisci la riga : ");
   scanf("%d",&rigaCercata);
   printf("\nInserisci la colonna : ");
@@ -163,7 +164,8 @@ void pathSearch(matriceInt mat)
   x = rigaCercata - 1;
   y = colonnaCercata - 1;
 
-  if(mat[x][y] != OSTACOLO && mat[x][y] != 0) {
+  if(mat[x][y] != OSTACOLO && mat[x][y] != 0)
+  {
     mat[x][y] = 'P';
 
     cercaMeta(mat,&metaX,&metaY);
@@ -201,6 +203,11 @@ void pathSearch(matriceInt mat)
       }
       i++;
     }
+  } else {
+    printf("\nNon puoi iniziare da un ostacolo\n");
+    system("pause");
+    clearScreen();
+    goto scelta;
   }
 }
 
