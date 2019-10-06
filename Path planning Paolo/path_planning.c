@@ -17,6 +17,7 @@
 
 //Definizione tipi
 typedef int matriceInt[MAX_SIZE][MAX_SIZE];
+typedef enum{false,true} bool;
 
 //Definizione funzioni utilizzate
 void leggiMatrice(matriceInt mat,int type);
@@ -152,63 +153,67 @@ void pathSearch(matriceInt mat)
   int rigaCercata,colonnaCercata,x,y;                       //Coordinate del punto di partenza
   int metaX,metaY;                                          //Coordinate della meta - vedi cercaMeta
   int i,j;                                                  //Contatori utilizzati
+  bool inputValido;
 
   clearScreen();
 
-  scelta:
-  printf("\nScegli la posizione da cui partire indicandone le coordinate\n\n Inserisci la riga : ");
-  scanf("%d",&rigaCercata);
-  printf("\nInserisci la colonna : ");
-  scanf("%d",&colonnaCercata);
-
-  x = rigaCercata - 1;
-  y = colonnaCercata - 1;
-
-  if(mat[x][y] != OSTACOLO && mat[x][y] != 0)
+  do
   {
-    mat[x][y] = 'P';
+    printf("\nScegli la posizione da cui partire indicandone le coordinate\n\n Inserisci la riga : ");
+    scanf("%d",&rigaCercata);
+    printf("\nInserisci la colonna : ");
+    scanf("%d",&colonnaCercata);
 
-    cercaMeta(mat,&metaX,&metaY);
+    x = rigaCercata - 1;
+    y = colonnaCercata - 1;
 
-    while(mat[metaX][metaY] == 0)                               //Serie di controlli sulle celle per individuare quella con valore minimo, e riassegnamento caratteri
+    if(mat[x][y] != OSTACOLO && mat[x][y] != 0)
     {
-      if(mat[x][y]==0)
+      mat[x][y] = 'P';
+      inputValido = true;
+
+      cercaMeta(mat,&metaX,&metaY);
+
+      while(mat[metaX][metaY] == 0)                               //Serie di controlli sulle celle per individuare quella con valore minimo, e riassegnamento caratteri
       {
-        mat[x][y]='G';
-      } else {
-        if (mat[x-1][y]<=mat[x+1][y] && mat[x-1][y]<=mat[x][y-1] && mat[x-1][y]<=mat[x][y+1]) {
-          mat[x][y]='^';
-          x=x-1;
-        } else if(mat[x+1][y]<=mat[x-1][y] && mat[x+1][y]<=mat[x][y-1] && mat[x+1][y]<=mat[x][y+1]) {
-          mat[x][y]='v';
-          x=x+1;
-        } else if(mat[x][y-1]<=mat[x][y+1] && mat[x][y-1]<=mat[x+1][y] && mat[x][y-1]<=mat[x-1][y]) {
-          mat[x][y]='<';
-          y=y-1;
-        } else if(mat[x][y+1]<=mat[x][y-1] && mat[x][y+1]<=mat[x+1][y] && mat[x][y+1]<=mat[x-1][y]) {
-          mat[x][y]='>';
-          y=y+1;
+        if(mat[x][y]==0)
+        {
+          mat[x][y]='G';
+        } else {
+          if (mat[x-1][y]<=mat[x+1][y] && mat[x-1][y]<=mat[x][y-1] && mat[x-1][y]<=mat[x][y+1]) {
+            mat[x][y]='^';
+            x=x-1;
+          } else if(mat[x+1][y]<=mat[x-1][y] && mat[x+1][y]<=mat[x][y-1] && mat[x+1][y]<=mat[x][y+1]) {
+            mat[x][y]='v';
+            x=x+1;
+          } else if(mat[x][y-1]<=mat[x][y+1] && mat[x][y-1]<=mat[x+1][y] && mat[x][y-1]<=mat[x-1][y]) {
+            mat[x][y]='<';
+            y=y-1;
+          } else if(mat[x][y+1]<=mat[x][y-1] && mat[x][y+1]<=mat[x+1][y] && mat[x][y+1]<=mat[x-1][y]) {
+            mat[x][y]='>';
+            y=y+1;
+          }
         }
       }
-    }
-    i=0;
-    while(i<MAX_SIZE)                                                           //Ultima rilettura della matrice per riformattarla con i caratteri corretti
-    {
-      j=0;
-      while(j<MAX_SIZE)
+      i=0;
+      while(i<MAX_SIZE)                                                           //Ultima rilettura della matrice per riformattarla con i caratteri corretti
       {
-        if(mat[i][j]==OSTACOLO) { mat[i][j]='*'; }
-        if(mat[i][j]!='<' && mat[i][j]!='>' && mat[i][j]!='v' && mat[i][j]!='^' && mat[i][j]!='P' && mat[i][j]!='G' && mat[i][j]!='*') { mat[i][j]='-'; }
-        j++;
+        j=0;
+        while(j<MAX_SIZE)
+        {
+          if(mat[i][j]==OSTACOLO) { mat[i][j]='*'; }
+          if(mat[i][j]!='<' && mat[i][j]!='>' && mat[i][j]!='v' && mat[i][j]!='^' && mat[i][j]!='P' && mat[i][j]!='G' && mat[i][j]!='*') { mat[i][j]='-'; }
+          j++;
+        }
+        i++;
       }
-      i++;
+    } else {
+      printf("\nNon puoi iniziare da un ostacolo\n");
+      system("pause");
+      clearScreen();
+      inputValido = false;
     }
-  } else {
-    printf("\nNon puoi iniziare da un ostacolo\n");
-    system("pause");
-    clearScreen();
-    goto scelta;
-  }
+  } while(!inputValido);
 }
 
 /*** clearScreen : pulisce il terminale ***/
