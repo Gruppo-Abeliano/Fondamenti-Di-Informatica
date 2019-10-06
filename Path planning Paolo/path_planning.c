@@ -92,7 +92,8 @@ void pathLenght(matriceInt mat)
 
   empty_cells=1;
   currentMaxDistance=0;
-  while(empty_cells != 0)
+
+  do
   {
     empty_cells=0;
     i=0;
@@ -119,9 +120,10 @@ void pathLenght(matriceInt mat)
       i++;
     }
     currentMaxDistance++;
-  }
+  } while(empty_cells != 0);
 }
 
+/*** cercaMeta : individua la posizione nella matrice della meta impostata ***/
 void cercaMeta(matriceInt mat, int* coordMetaX, int* coordMetaY)
 {
   int i,j;
@@ -143,12 +145,13 @@ void cercaMeta(matriceInt mat, int* coordMetaX, int* coordMetaY)
   }
 }
 
+/*** pathSearch : esegue l'algoritmo per la costruzione del percorso da una determinata cella di partenza ***/
 void pathSearch(matriceInt mat)
 {
-  int minimo;
-  int rigaCercata,colonnaCercata,x,y;
-  int metaX,metaY;
-  int i,j;
+  int minimo;                                               //Utilizzata per storare il valore minimo delle celle adiacenti
+  int rigaCercata,colonnaCercata,x,y;                       //Coordinate del punto di partenza
+  int metaX,metaY;                                          //Coordinate della meta - vedi cercaMeta
+  int i,j;                                                  //Contatori utilizzati
 
   clearScreen();
 
@@ -165,7 +168,7 @@ void pathSearch(matriceInt mat)
 
     cercaMeta(mat,&metaX,&metaY);
 
-    while(mat[metaX][metaY] == 0)
+    while(mat[metaX][metaY] == 0)                               //Serie di controlli sulle celle per individuare quella con valore minimo, e riassegnamento caratteri
     {
       if(mat[x][y]==0)
       {
@@ -187,7 +190,7 @@ void pathSearch(matriceInt mat)
       }
     }
     i=0;
-    while(i<MAX_SIZE)
+    while(i<MAX_SIZE)                                                           //Ultima rilettura della matrice per riformattarla con i caratteri corretti
     {
       j=0;
       while(j<MAX_SIZE)
@@ -201,6 +204,7 @@ void pathSearch(matriceInt mat)
   }
 }
 
+/*** clearScreen : pulisce il terminale ***/
 void clearScreen()
 {
   system("cls");
