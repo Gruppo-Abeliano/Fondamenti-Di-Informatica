@@ -64,9 +64,6 @@ void mostraPiano(int piano[A][L])
             case 1:
                 printf("\033[0;32m");
                 break;
-            case 2:
-                printf("\033[0;31m");
-                break;
             case -1:
                 printf("\033[0;33m");
                 break;
