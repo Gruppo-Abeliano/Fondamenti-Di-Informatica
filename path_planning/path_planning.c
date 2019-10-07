@@ -1,16 +1,29 @@
 #include <stdio.h>
 
-#define L 11 // Larghezza della matrice
+/**
+ * Autori Paolo Pertino e Alberto Nidasio
+*/
+
 #define A 10 // Altezza della matrice
+#define L 11 // Larghezza della matrice
 #define VALORE_OSTACOLO 1000
 #define VALORE_ACCESSO -1
 #define VALORE_META 0
 
+typedef int matrice[A][L];
+typedef enum
+{
+  false,
+  true
+} bool;
+
+void lunghezzaPercorso(matrice piano);
+void ricercaPercorso(matrice piano, int xPartenza, int yPartenza);
 void mostraPiano(int piano[A][L], int percorso);
 
 int main()
 {
-    int piano[A][L] = {
+    matrice piano = {
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
         {-1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1},
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -18,17 +31,38 @@ int main()
         {-1, -1, -1, 1000, -1, -1, -1, -1, -1, -1, -1},
         {-1, -1, -1, 1000, -1, -1, -1, -1, -1, -1, -1},
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-        {-1, -1, -1, -1, 1000, 1000, 1000, -1, -1, -1, -1},
+        {-1, -1, -1, -1, -1, 1000, 1000, 1000, -1, -1, -1},
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
-    int i, j;                 // Contatori
-    int valore = VALORE_META; // Indica il valore da cercare
-    int trovatiLibreri;       // memorizza il numero di punti accessibili non ancora sovrascritti
     int xPartenza, yPartenza; // Coordinate da cui calcolare il percorso
-    int l, t, r, b;           // Variabile in cui salvo i valori dei vicini
 
     printf("Input:\n");
     mostraPiano(piano, 0);
+
+    lunghezzaPercorso(piano);
+
+    printf("\nOutput 1:\n");
+    mostraPiano(piano, 0);
+
+    // Ora chiedo le coordinate da cui si vuole partire
+    printf("Inserisci le coordinate da cui vuoi partire per raggiungere la meta:\nx: ");
+    scanf("%d", &xPartenza);
+    printf("y: ");
+    scanf("%d", &yPartenza);
+
+    ricercaPercorso(piano, xPartenza, yPartenza);
+
+    printf("\nOutput 2:\n");
+    mostraPiano(piano, 1);
+
+    return (0);
+}
+
+void lunghezzaPercorso(matrice piano)
+{
+    int i, j;                 // Contatori
+    int valore = VALORE_META; // Indica il valore da cercare
+    int trovatiLibreri;
 
     do
     {
@@ -63,19 +97,13 @@ int main()
                 }
             }
         valore++;
-
-        // printf("\n%d %d\n", valore, trovatiLibreri);
-        // mostraPiano(piano);
     } while (trovatiLibreri == -1 || trovatiLibreri > 0);
+}
 
-    printf("\nOutput 1:\n");
-    mostraPiano(piano, 0);
-
-    // Ora chiedo le coordinate da cui si vuole partire
-    printf("Inserisci le coordinate da cui vuoi partire per raggiungere la meta:\nx: ");
-    scanf("%d", &xPartenza);
-    printf("y: ");
-    scanf("%d", &yPartenza);
+void ricercaPercorso(matrice piano, int xPartenza, int yPartenza)
+{
+    int i, j; // Contatori
+    int l, t, r, b;           // Variabile in cui salvo i valori dei vicini
 
     // Calcolo il percorso
     i = xPartenza;
@@ -150,16 +178,15 @@ int main()
     for (i = 0; i < A; i++)
         for (j = 0; j < L; j++)
         {
-            if (piano[i][j] == VALORE_OSTACOLO) piano[i][j] = '*';
-            else if (piano[i][j] > VALORE_OSTACOLO) piano[i][j] -= VALORE_OSTACOLO;
-            else if (piano[i][j] == 0) piano[i][j] = 'M';
-            else piano[i][j] = '-';
+            if (piano[i][j] == VALORE_OSTACOLO)
+                piano[i][j] = '*';
+            else if (piano[i][j] > VALORE_OSTACOLO)
+                piano[i][j] -= VALORE_OSTACOLO;
+            else if (piano[i][j] == 0)
+                piano[i][j] = 'M';
+            else
+                piano[i][j] = '-';
         }
-
-    printf("\nOutput 2:\n");
-    mostraPiano(piano, 1);
-
-    return (0);
 }
 
 void mostraPiano(int piano[A][L], int percorso)
@@ -194,22 +221,22 @@ void mostraPiano(int piano[A][L], int percorso)
                 switch (piano[i][j])
                 {
                 case '-':
-                    printf("\033[0;32m");
+                    printf("\033[0m");
                     break;
                 case 'M':
-                    printf("\033[0;31m");
-                    break;
-                case 'P':
-                    printf("\033[0;31m");
-                    break;
-                case '*':
-                    printf("\033[0;35m");
-                    break;
-                default:
                     printf("\033[0;36m");
                     break;
+                case 'P':
+                    printf("\033[0;36m");
+                    break;
+                case '*':
+                    printf("\033[0;31m");
+                    break;
+                default:
+                    printf("\033[0;33m");
+                    break;
                 }
-                printf("%c", (char) piano[i][j]);
+                printf("%c", (char)piano[i][j]);
             }
 
             // Reimposto il colore
