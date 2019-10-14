@@ -1,17 +1,32 @@
+/***
+  Nome : Uguaglianza Testi
+  Descrizione : #Dati in input due stringhe di caratteri, cerca la sequenza di caratteri più lunga condivisa da entrambe le stringhe di input e la stampa a schermo seguita dal carattere \0.
+     ESEMPIO :
+        input 1 : 'alternativamente'
+        input 2 : 'eternita'
+        Risultato : 'tern'
+***/
+
+//Importo Librerie
 #include <stdio.h>
 #include <stdlib.h>
 
+//Definizione costanti esercizio
 #define MAX_LUNGHEZZA 100
 
+//Difinizione tipi utilizzati
 typedef char testo[MAX_LUNGHEZZA];
 typedef int contatore;
 
+//Definisco funzioni
 void trovaComune(testo TestoA, testo TestoB);
+void inserisciTesti(testo TestoA, testo TestoB);
 
 int main(int argc, char const *argv[]) {
-  testo TestoA = "alternativamente";                  //Definisco le variabili già predeterminate dall'esercizio
-  testo TestoB = "eternita";
-  
+  testo TestoA;                  //Definisco le variabili già predeterminate dall'esercizio
+  testo TestoB;
+
+  inserisciTesti(TestoA,TestoB);
   trovaComune(TestoA, TestoB);
 
   return 0;
@@ -66,5 +81,13 @@ void trovaComune(testo TestoA, testo TestoB)
   }
   TestoComune[CursoreComune] = '\0';
 
-  printf("%s", TestoComune);
+  printf("Il testo in comune delle due stringhe è %s ed ha lunghezza di %d caratteri", TestoComune, massima_lunghezza);
+}
+
+void inserisciTesti(testo TestoA, testo TestoB)
+{
+  printf("\nInserisci il primo testo da confrontare : ");
+  scanf("%s", TestoA);
+  printf("\nInserisci il secondo testo da confrontare : ");
+  scanf("%s", TestoB);
 }
