@@ -1,0 +1,1 @@
+clear && gcc struct_listeSequenziali.c -o compiled && ./compiled

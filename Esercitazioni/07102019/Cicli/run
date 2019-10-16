@@ -1,0 +1,1 @@
+clear && gcc cicli.c -o compiled && ./compiled
