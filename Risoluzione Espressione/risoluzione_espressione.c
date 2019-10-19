@@ -117,20 +117,20 @@ void trovaEspressione(Espressione *expression)
 {
   Contatore i,k;
 
-  for(int i=0;i<(*expression).Numero_elementi;i++)
+  for(i=0;i<(*expression).Numero_elementi;i++)
   {
     if((*expression).Lista[i].Tipologia == parentesi)
     {
       if((*expression).Lista[i].Parentesi == PARENTESI_APERTA)
       {
-        k=1;
+        k=i+1;
         while((*expression).Lista[k].Tipologia!=parentesi)
         {
           ++k;
         }
         if((*expression).Lista[k].Parentesi == PARENTESI_CHIUSA)
         {
-          risolviEspressione(&expression,i+1,k);
+          risolviEspressione(&expression,i+1,k-1);
         } else {
           i=k-1;
         }
@@ -141,20 +141,42 @@ void trovaEspressione(Espressione *expression)
 
 void risolviEspressione(Espressione *expression, Contatore inizioEspressione, Contatore fineEspressione)
 {
-  Contatore currentPos;
-  int Operatori[2];
+  Contatore currentPos,contOperatori,newPos,k,j,esponente;
+  int Operatori[2],numeroDaInserire;
+  char tipoOperazione;
 
-  currentPos = inizioEspressione-1;
+  currentPos = inizioEspressione;
+  contOperatori = 0;
 
   while(currentPos<fineEspressione)
   {
     if((*expression).Lista[currentPos].Tipologia == numero)
     {
-      //ciclo per scrivere numeri
-      risultato+=(*expression).Lista[currentPos].Numero * pow(10,esponente);
-      ++esponente;
+      k=currentPos;
+      j=0;
+      while((*expression).Lista[k].Tipologia == numero)
+      {
+        ++k;
+        ++j;
+      }
+      numeroDaInserire=0;
+      newPos = k;
+      k--;
+      for(esponente=0;esponente<j;esponente++)
+      {
+        numeroDaInserire+=(*expression).Lista[k].Numero * pow(10,esponente);
+        k--;
+      }
+      Operatori[contOperatori]=numeroDaInserire;
+      ++contOperatori;
+      currentPos = newPos;
+    } else {
+      tipoOperazione = (*expression).Lista[currentPos].Operatore;
     }
   }
+
+  //Qui ho finito di ordinare l'espressione in una struttura precisa. E' ora necessario calcolare il risultato e scalare la lista sequenziale expression
+  //DA FARE
 }
 
 void removeSpaces(char espressione[])
