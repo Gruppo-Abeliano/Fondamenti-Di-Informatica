@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 //Definizione costanti
 #define MAX_LUNGHEZZA_ESPRESSIONE 100
@@ -38,6 +37,7 @@ void leggiEspressione(Espressione *expression);
 void trovaEspressione(Espressione *expression);
 void risolviEspressione(Espressione *expression, Contatore inizioEspressione, Contatore fineEspressione);
 void removeSpaces(char espressione[]);
+int potenza(int base, int exp);
 
 
 //Main
@@ -46,7 +46,7 @@ int main(int argc, char const *argv[]) {
 
   compilaEspressione(&expression);
   leggiEspressione(&expression);
-  risolviEspressione(&expression);
+  trovaEspressione(&expression);
 
   return 0;
 }
@@ -78,7 +78,7 @@ void compilaEspressione(Espressione *expression)
       (*expression).Lista[(*expression).Numero_elementi].Tipologia = parentesi;
       (*expression).Lista[(*expression).Numero_elementi].Parentesi = espressione[i];
     }
-    else if(espressione[i]==SOMMA || espressione[i]==DIFFERENZA || espressione[i]==MOLTIPLICAZIONE || espressione[i]==DIVISIONE)
+    else if(espressione[i]==SOMMA || espressione[i]==SOTTRAZIONE || espressione[i]==MOLTIPLICAZIONE || espressione[i]==DIVISIONE)
     {
       (*expression).Lista[(*expression).Numero_elementi].Tipologia = operatore;
       (*expression).Lista[(*expression).Numero_elementi].Operatore = espressione[i];
@@ -130,7 +130,7 @@ void trovaEspressione(Espressione *expression)
         }
         if((*expression).Lista[k].Parentesi == PARENTESI_CHIUSA)
         {
-          risolviEspressione(&expression,i+1,k-1);
+          risolviEspressione(expression,i,k);
         } else {
           i=k-1;
         }
@@ -145,7 +145,7 @@ void risolviEspressione(Espressione *expression, Contatore inizioEspressione, Co
   int Operatori[2],numeroDaInserire;
   char tipoOperazione;
 
-  currentPos = inizioEspressione;
+  currentPos = inizioEspressione + 1;
   contOperatori = 0;
 
   while(currentPos<fineEspressione)
@@ -164,7 +164,7 @@ void risolviEspressione(Espressione *expression, Contatore inizioEspressione, Co
       k--;
       for(esponente=0;esponente<j;esponente++)
       {
-        numeroDaInserire+=(*expression).Lista[k].Numero * pow(10,esponente);
+        numeroDaInserire=numeroDaInserire + ((*expression).Lista[k].Numero * potenza(10,esponente));
         k--;
       }
       Operatori[contOperatori]=numeroDaInserire;
@@ -172,11 +172,25 @@ void risolviEspressione(Espressione *expression, Contatore inizioEspressione, Co
       currentPos = newPos;
     } else {
       tipoOperazione = (*expression).Lista[currentPos].Operatore;
+      ++currentPos;
     }
   }
-
   //Qui ho finito di ordinare l'espressione in una struttura precisa. E' ora necessario calcolare il risultato e scalare la lista sequenziale expression
   //DA FARE
+}
+
+int potenza(int base, int exp)
+{
+  Contatore currentExp;
+  int risultato;
+
+  risultato = 1;
+  for(currentExp=0;currentExp<exp;currentExp++)
+  {
+    risultato *= base;
+  }
+
+  return risultato;
 }
 
 void removeSpaces(char espressione[])
