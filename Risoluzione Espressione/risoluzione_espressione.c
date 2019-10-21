@@ -1,3 +1,11 @@
+/**
+ * Autore: Paolo Pertino
+ * Nome file: risoluzione_espressione.c
+ * Scopo: data una qualsiasi espressione di numeri interi (l'input deve essere fornito in un preciso formato spiegato all'utente
+ *        durante l'esecuzione del programma) contenente le operazioni +,-,*,/, il programma risolve l'espressione e ne fornisce
+ *        il risultato.
+ */
+
 //Librerie
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,7 +54,9 @@ int main(int argc, char const *argv[]) {
   Espressione expression;
 
   compilaEspressione(&expression);
+  printf("\n");
   leggiEspressione(&expression);
+  printf("\nOperazioni svolte :\n\n");
   trovaEspressione(&expression);
 
   return 0;
@@ -224,10 +234,9 @@ void aggiornaLista(Espressione *expression,Contatore inizioEspressione,Contatore
 
   (*expression).Lista[inizioEspressione].Tipologia = numero;
   (*expression).Lista[inizioEspressione].Numero = risultato;
-  (*expression).Numero_elementi--;
 
   newStart = inizioEspressione + 1;
-  oldExpLenght = fineEspressione - newStart;
+  oldExpLenght = fineEspressione - inizioEspressione;
   while(oldExpLenght>0)
   {
     for(newStart=inizioEspressione+1;newStart<(*expression).Numero_elementi;newStart++)
