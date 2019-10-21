@@ -32,12 +32,13 @@ typedef struct
 } Espressione;
 
 //Definizione funzioni
+int potenza(int base, int exp);
 void compilaEspressione(Espressione *expression);
 void leggiEspressione(Espressione *expression);
 void trovaEspressione(Espressione *expression);
-void risolviEspressione(Espressione *expression, Contatore inizioEspressione, Contatore fineEspressione);
+void risolviEspressione(Espressione *expression,Contatore inizioEspressione,Contatore fineEspressione);
+void aggiornaLista(Espressione *expression,Contatore inizioEspressione,Contatore fineEspressione,int risultato);
 void removeSpaces(char espressione[]);
-int potenza(int base, int exp);
 
 
 //Main
@@ -49,6 +50,20 @@ int main(int argc, char const *argv[]) {
   trovaEspressione(&expression);
 
   return 0;
+}
+
+int potenza(int base, int exp)
+{
+  Contatore currentExp;
+  int risultato;
+
+  risultato = 1;
+  for(currentExp=0;currentExp<exp;currentExp++)
+  {
+    risultato *= base;
+  }
+
+  return risultato;
 }
 
 void compilaEspressione(Espressione *expression)
@@ -142,7 +157,7 @@ void trovaEspressione(Espressione *expression)
 void risolviEspressione(Espressione *expression, Contatore inizioEspressione, Contatore fineEspressione)
 {
   Contatore currentPos,contOperatori,newPos,k,j,esponente;
-  int Operatori[2],numeroDaInserire;
+  int Operatori[2],numeroDaInserire,risultato;
   char tipoOperazione;
 
   currentPos = inizioEspressione + 1;
@@ -176,21 +191,57 @@ void risolviEspressione(Espressione *expression, Contatore inizioEspressione, Co
     }
   }
   //Qui ho finito di ordinare l'espressione in una struttura precisa. E' ora necessario calcolare il risultato e scalare la lista sequenziale expression
-  //DA FARE
-}
-
-int potenza(int base, int exp)
-{
-  Contatore currentExp;
-  int risultato;
-
-  risultato = 1;
-  for(currentExp=0;currentExp<exp;currentExp++)
+  switch(tipoOperazione)
   {
-    risultato *= base;
+    case SOMMA:
+      risultato = Operatori[0] + Operatori[1];
+      break;
+    case SOTTRAZIONE:
+      risultato = Operatori[0] - Operatori[1];
+      break;
+    case MOLTIPLICAZIONE:
+      risultato = Operatori[0] * Operatori[1];
+      break;
+    case DIVISIONE:
+      risultato = Operatori[0] / Operatori[1];
+      break;
   }
 
-  return risultato;
+  aggiornaLista(expression,inizioEspressione,fineEspressione,risultato);
+}
+
+void aggiornaLista(Espressione *expression,Contatore inizioEspressione,Contatore fineEspressione,int risultato)
+{
+  int oldExpLenght, newStart;
+
+  (*expression).Lista[inizioEspressione].Tipologia = numero;
+  (*expression).Lista[inizioEspressione].Numero = risultato;
+  (*expression).Numero_elementi--;
+
+  oldExpLenght = fineEspressione - newStart;
+  while(oldExpLenght>0)
+  {
+    for(newStart=inizioEspressione+1;newStart<(*expression).Numero_elementi;newStart++)
+    {
+      (*expression).Lista[newStart].Tipologia = (*expression).Lista[newStart+1].Tipologia;
+      switch((*expression).Lista[newStart].Tipologia)
+      {
+        case numero:
+          (*expression).Lista[newStart].Numero = (*expression).Lista[newStart+1].Numero;
+          break;
+        case parentesi:
+          (*expression).Lista[newStart].Parentesi = (*expression).Lista[newStart+1].Parentesi;
+          break;
+        case operatore:
+          (*expression).Lista[newStart].Operatore = (*expression).Lista[newStart+1].Operatore;
+          break;
+      }
+    }
+    (*expression).Numero_elementi--;
+    --oldExpLenght;
+  }
+
+  leggiEspressione(expression);
 }
 
 void removeSpaces(char espressione[])
