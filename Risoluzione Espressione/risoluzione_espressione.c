@@ -126,31 +126,37 @@ void leggiEspressione(Espressione *expression)
         break;
     }
   }
+  printf("\n");
 }
 
 void trovaEspressione(Espressione *expression)
 {
   Contatore i,k;
-
-  for(i=0;i<(*expression).Numero_elementi;i++)
+  if ((*expression).Lista[0].Tipologia!=numero)
   {
-    if((*expression).Lista[i].Tipologia == parentesi)
+    for(i=0;i<(*expression).Numero_elementi;i++)
     {
-      if((*expression).Lista[i].Parentesi == PARENTESI_APERTA)
+      if((*expression).Lista[i].Tipologia == parentesi)
       {
-        k=i+1;
-        while((*expression).Lista[k].Tipologia!=parentesi)
+        if((*expression).Lista[i].Parentesi == PARENTESI_APERTA)
         {
-          ++k;
-        }
-        if((*expression).Lista[k].Parentesi == PARENTESI_CHIUSA)
-        {
-          risolviEspressione(expression,i,k);
-        } else {
-          i=k-1;
+          k=i+1;
+          while((*expression).Lista[k].Tipologia!=parentesi)
+          {
+            ++k;
+          }
+          if((*expression).Lista[k].Parentesi == PARENTESI_CHIUSA)
+          {
+            risolviEspressione(expression,i,k);
+          } else {
+            i=k-1;
+          }
         }
       }
     }
+  } else {
+    printf("\nIl risultato dell'espressione vale : %d",(*expression).Lista[0].Numero);
+    return;
   }
 }
 
@@ -208,6 +214,8 @@ void risolviEspressione(Espressione *expression, Contatore inizioEspressione, Co
   }
 
   aggiornaLista(expression,inizioEspressione,fineEspressione,risultato);
+  leggiEspressione(expression);
+  trovaEspressione(expression);
 }
 
 void aggiornaLista(Espressione *expression,Contatore inizioEspressione,Contatore fineEspressione,int risultato)
@@ -218,6 +226,7 @@ void aggiornaLista(Espressione *expression,Contatore inizioEspressione,Contatore
   (*expression).Lista[inizioEspressione].Numero = risultato;
   (*expression).Numero_elementi--;
 
+  newStart = inizioEspressione + 1;
   oldExpLenght = fineEspressione - newStart;
   while(oldExpLenght>0)
   {
@@ -240,8 +249,6 @@ void aggiornaLista(Espressione *expression,Contatore inizioEspressione,Contatore
     (*expression).Numero_elementi--;
     --oldExpLenght;
   }
-
-  leggiEspressione(expression);
 }
 
 void removeSpaces(char espressione[])
