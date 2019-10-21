@@ -1,0 +1,1 @@
+clear && gcc carattere_triangoli.c -o carattereTriangoli_compiled && ./carattereTriangoli_compiled

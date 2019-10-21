@@ -1,0 +1,13 @@
+COMANDI TERMINALE :
+
+cd -- change directory --> cambiare directory  SINTASSI : cd *directory in cui si vuole andare*
+ls -- vedere cosa c'è all'interno di una directory SINTASSI : ls
+mkdir -- crea una cartella nella directory in cui mi trovo SINTASSI : mkdir *nome della cartella*
+touch -- crea un file nella directory in cui mi trovo SINTASSI : touch *nome file.estensione*
+help -- informazioni utili SINTASSI : help *nome comando*
+*FRECCIA SU* : accedi allo storico dei comandi utilizzati in precedenza
+./*nomeFile* -- esecuzione di un eseguibile (ESSENZIALE DOPO LA COMPILAZIONE PER AVVIARE IL FILE ESEGUIBILE CREATO)
+
+COMANDI GCC :
+
+gcc -wall -o *nome dell'eseguibile creato con la compilazione(può essere un nome qualunque ad esempio 'test')* *nomeFile.estensione* -- compila e dice eventuali errori o warning(cercare di correggere anche i warning)
