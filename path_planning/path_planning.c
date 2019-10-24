@@ -1,5 +1,11 @@
 #include <stdio.h>
 
+#ifdef linux
+  #define OS "LINUX"
+#elif _WIN32
+  #define OS "WINDOWS"
+#endif
+
 /**
  * Autori Paolo Pertino e Alberto Nidasio
 */
@@ -20,6 +26,21 @@ typedef enum
 void lunghezzaPercorso(matrice piano);
 void ricercaPercorso(matrice piano, int xPartenza, int yPartenza);
 void mostraPiano(int piano[A][L], int percorso);
+
+//Funzioni per colori
+void Red();
+void BoldRed();
+void Green();
+void BoldGreen();
+void Yellow();
+void BoldYellow();
+void Blue();
+void BoldBlue();
+void Magenta();
+void BoldMagenta();
+void Cyan();
+void BoldCyan();
+void Reset();
 
 int main()
 {
@@ -201,47 +222,68 @@ void mostraPiano(int piano[A][L], int percorso)
             if (!percorso)
             {
                 // Numero
-                switch (piano[i][j])
+                if(OS == "LINUX")
                 {
-                case 1000:
-                    printf("\033[0;32m");
-                    break;
-                case -1:
-                    printf("\033[0;31m");
-                    break;
-                default:
-                    printf("\033[0;36m");
-                    break;
+                  switch (piano[i][j])
+                  {
+                  case 1000:
+                      Green();
+                      break;
+                  case -1:
+                      Red();
+                      break;
+                  default:
+                      Cyan();
+                      break;
+                  }
                 }
                 printf("%5d", piano[i][j]);
             }
             else
             {
                 // Numero
-                switch (piano[i][j])
+                if(OS == "LINUX")
                 {
-                case '-':
-                    printf("\033[0m");
-                    break;
-                case 'M':
-                    printf("\033[0;36m");
-                    break;
-                case 'P':
-                    printf("\033[0;36m");
-                    break;
-                case '*':
-                    printf("\033[0;31m");
-                    break;
-                default:
-                    printf("\033[0;33m");
-                    break;
+                  switch (piano[i][j])
+                  {
+                  case '-':
+                      Reset();
+                      break;
+                  case 'M':
+                      Cyan();
+                      break;
+                  case 'P':
+                      Cyan();
+                      break;
+                  case '*':
+                      Red();
+                      break;
+                  default:
+                      Yellow();
+                      break;
+                  }
                 }
                 printf("%c", (char)piano[i][j]);
             }
 
             // Reimposto il colore
-            printf("\033[0m");
+            if (OS == "LINUX") { Reset(); }
         }
         printf("\n");
     }
 }
+
+//Colors
+void Red() { printf("\033[0;31m"); }
+void BoldRed() { printf("\033[1;31m"); }
+void Green() { printf("\033[0;32m"); }
+void BoldGreen() { printf("\033[1;32m"); }
+void Yellow() { printf("\033[0;33m"); }
+void BoldYellow() { printf("\033[01;33m"); }
+void Blue() { printf("\033[0;34m"); }
+void BoldBlue() { printf("\033[1;34m"); }
+void Magenta() { printf("\033[0;35m"); }
+void BoldMagenta() { printf("\033[1;35m"); }
+void Cyan() { printf("\033[0;36m"); }
+void BoldCyan() { printf("\033[1;36m"); }
+void Reset() { printf("\033[0m"); }
