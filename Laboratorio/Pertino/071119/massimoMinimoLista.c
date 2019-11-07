@@ -14,12 +14,16 @@ int main(int argc, char const *argv[]) {
     printf("\nInserisci un numero della sequenza (0 per terminare) : ");
     scanf("%d", &numero);
 
+    if(contaNumeri==0)
+    {
+      massimo=numero;
+      minimo=numero;
+    }
+
     ++contaNumeri;
 
-    if(contaNumeri == 1) { massimo = numero; minimo = numero; }
-
     if(numero > massimo) massimo = numero;
-    else if(numero < minimo) minimo = numero;
+    else if((numero < minimo) && (numero != 0)) minimo = numero;
   } while(numero != 0);
 
   if((numero == 0) && (contaNumeri == 1))

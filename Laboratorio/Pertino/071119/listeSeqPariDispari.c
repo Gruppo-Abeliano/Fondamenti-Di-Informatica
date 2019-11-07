@@ -6,19 +6,21 @@
 typedef int Vettore[NUM_ELEM];
 typedef int Contatore;
 typedef enum{false,true} bool;
-typedef enum{pari,dispari,ingresso} typeOfVect;
-typedef struct {
+typedef enum{pari,dispari,ingresso} typeOfVector;
+typedef struct
+{
   Vettore lista;
   int numeroElementi;
 } ListaInteri;
 
-void compilaLista(ListaInteri *Ingresso,int daInserire,bool daUtente);
-void analisiLista(ListaInteri *Ingresso,ListaInteri *Pari,ListaInteri *Dispari);
-void leggiLista(ListaInteri *daLeggere,typeOfVect tipoVettore);
+void compilaLista(ListaInteri *toCompile,int toInsert,bool fromUser);
+void analisiLista(ListaInteri *toAnalize, ListaInteri *Pari, ListaInteri *Dispari);
+void leggiLista(ListaInteri *toRead,typeOfVector vectorType);
 
 int main(int argc, char const *argv[]) {
   ListaInteri Ingresso,Pari,Dispari;
 
+  Ingresso.numeroElementi = 0;
   Pari.numeroElementi = 0;
   Dispari.numeroElementi = 0;
 
@@ -30,63 +32,59 @@ int main(int argc, char const *argv[]) {
   return 0;
 }
 
-void compilaVettore(ListaInteri *Ingresso,int daInserire,bool daUtente)
+void compilaLista(ListaInteri *toCompile,int toInsert,bool fromUser)
 {
-  Contatore indiceArray;
+  Contatore contaElementiLista;
   int numeroElementiDaInserire;
 
-  if(daUtente == true)
+  if(fromUser == true)
   {
-    (*Ingresso).numeroElementi = 0;
-
     do {
-      printf("\nQuanti elementi vuoi inserire nella lista?");
-      scanf("%d",&numeroElementiDaInserire);
+      printf("\nQuanti numeri vuoi inserire? (Massimo %d) : ",NUM_ELEM);
+      scanf("%d", &numeroElementiDaInserire);
 
-      if(numeroElementiDaInserire<0) printf("\nValore non valido");
-    } while(numeroElementiDaInserire>=0);
+      if(numeroElementiDaInserire<0 || numeroElementiDaInserire>NUM_ELEM) printf("\nValore non valido");
+    } while(numeroElementiDaInserire<0 || numeroElementiDaInserire>NUM_ELEM);
 
-    while(numeroElementiDaInserire > 0)
+    for(contaElementiLista=0;contaElementiLista<numeroElementiDaInserire;contaElementiLista++)
     {
-      printf("\nInserisci il %d elemento : ",((*Ingresso).numeroElementi + 1));
-      scanf("%d", Ingresso.lista[(*Ingresso).numeroElementi]);
+      printf("\nInserisci il %d numero : ", contaElementiLista+1);
+      scanf("%d", &toInsert);
+      (*toCompile).lista[contaElementiLista] = toInsert;
 
-      ++(*Ingresso).numeroElementi;
-      --numeroElementiDaInserire;
+      ++(*toCompile).numeroElementi;
     }
   } else {
-    (*Ingresso).lista[(*Ingresso).numeroElementi] = daInserire;
-    ++(*Ingresso).numeroElementi;
+    (*toCompile).lista[(*toCompile).numeroElementi] = toInsert;
+    ++(*toCompile).numeroElementi;
   }
 }
 
-void analisiVettore(ListaInteri *Ingresso,ListaInteri *Pari,ListaInteri *Dispari)
+void analisiLista(ListaInteri *toAnalize, ListaInteri *Pari, ListaInteri *Dispari)
 {
-  Contatore indiceLista;
+  Contatore scorriLista;
+  int NumeroElementi;
 
-  for(indiceLista = 0;indiceLista<(*Ingresso).numeroElementi;++indiceLista)
+  for(scorriLista=0;scorriLista<(*toAnalize).numeroElementi;scorriLista++)
   {
-    if((*Ingresso).lista[indiceLista] % 2 == 0)
-    {
-      compilaVettore(Pari,(*Ingresso).lista[indiceLista],false);
-    } else {
-      compilaVettore(Dispari,(*Ingresso).lista[indiceLista],false);
-    }
+    if((*toAnalize).lista[scorriLista] % 2 == 0) compilaLista(Pari,(*toAnalize).lista[scorriLista],false);
+    else compilaLista(Dispari,(*toAnalize).lista[scorriLista],false);
   }
 }
 
-void leggiVettore(ListaInteri *daLeggere,typeOfVect tipoVettore)
+void leggiLista(ListaInteri *toRead,typeOfVector vectorType)
 {
-  Contatore indiceLista;
+  Contatore scorriLista;
 
-  switch (tipoVettore) {
+  switch(vectorType)
+  {
+    case ingresso: printf("\nNumeri inseriti : "); break;
     case pari: printf("\nNumeri pari : "); break;
     case dispari: printf("\nNumeri dispari : "); break;
-    case ingresso: printf("\nNumeri inseriti : "); break;
   }
 
-  for(indiceLista=0;indiceLista<(*daLeggere).numeroElementi;++indiceLista)
+  for(scorriLista=0;scorriLista<(*toRead).numeroElementi;scorriLista++)
   {
-    printf("%d\t", (*daLeggere).lista[indiceLista]);
+    printf("%d\t",(*toRead).lista[scorriLista]);
   }
 }
