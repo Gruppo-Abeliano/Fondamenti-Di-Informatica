@@ -9,12 +9,14 @@ int main(int argc, char const *argv[]) {
   massimo = 0;
   minimo = 0;
   contaNumeri = 0;
-  
+
   do {
     printf("\nInserisci un numero della sequenza (0 per terminare) : ");
     scanf("%d", &numero);
 
     ++contaNumeri;
+
+    if(contaNumeri == 1) { massimo = numero; minimo = numero; }
 
     if(numero > massimo) massimo = numero;
     else if(numero < minimo) minimo = numero;
