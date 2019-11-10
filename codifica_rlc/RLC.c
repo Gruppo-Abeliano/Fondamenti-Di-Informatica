@@ -24,8 +24,9 @@ mentre l’array
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ARR_LENGHT 1000
+#define ARR_LENGHT 10
 #define ZERO_ASCII 48
+//#define VUOTO 'x'
 
 
 typedef char arrayOriginale[ARR_LENGHT+1];
@@ -62,24 +63,15 @@ void rlc(arrayOriginale *toCode,listaFinale *result)
 {
   contatore scorriArray,scorriUguali;
   contatore contaElementiUguali;
-  int Start;
   char daConfrontare;
 
   if(1==((*toCode)[0]-ZERO_ASCII))
   {
     (*result).arrayFinale[0] = '0';
     ++(*result).numeroElementi;
-    scorriArray=0;
-    while((*toCode)[scorriArray]==((char)(1+ZERO_ASCII)))
-    {
-      ++scorriArray;
-    }
-    Start = scorriArray;
-  } else {
-    Start = 0;
   }
 
-  for(scorriArray=Start;scorriArray<ARR_LENGHT+1;++scorriArray)
+  for(scorriArray=0;scorriArray<ARR_LENGHT;++scorriArray)
   {
     contaElementiUguali = 0;
     daConfrontare = (*toCode)[scorriArray];
@@ -94,6 +86,12 @@ void rlc(arrayOriginale *toCode,listaFinale *result)
 
     scorriArray=scorriUguali-1;
   }
+
+  /*while((*result).numeroElementi < ARR_LENGHT)
+  {
+    (*result).arrayFinale[(*result).numeroElementi] = VUOTO;
+    ++(*result).numeroElementi;
+  }*/
 }
 
 void leggiRLC(listaFinale *toPrint)
