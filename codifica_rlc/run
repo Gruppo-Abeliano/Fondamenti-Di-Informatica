@@ -1,0 +1,1 @@
+clear && gcc RLC.c -o compiled && ./compiled
