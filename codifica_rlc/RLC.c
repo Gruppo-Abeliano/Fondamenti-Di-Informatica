@@ -24,13 +24,13 @@ mentre l’array
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ARR_LENGHT 10
+#define ARR_LENGHT 1000
 #define ZERO_ASCII 48
-//#define VUOTO 'x'
+#define VUOTO -1
 
 
 typedef char arrayOriginale[ARR_LENGHT+1];
-typedef char arrayCodificato[ARR_LENGHT];
+typedef int arrayCodificato[ARR_LENGHT];
 typedef int contatore;
 typedef struct
 {
@@ -41,6 +41,7 @@ typedef struct
 void compilaArray(arrayOriginale *toCompile);
 void rlc(arrayOriginale *toCode,listaFinale *result);
 void leggiRLC(listaFinale *toPrint);
+int contaElementi();
 
 int main(int argc, char const *argv[]) {
   arrayOriginale arrayToCode;
@@ -64,14 +65,17 @@ void rlc(arrayOriginale *toCode,listaFinale *result)
   contatore scorriArray,scorriUguali;
   contatore contaElementiUguali;
   char daConfrontare;
+  int lunghezzaArray;
 
   if(1==((*toCode)[0]-ZERO_ASCII))
   {
-    (*result).arrayFinale[0] = '0';
+    (*result).arrayFinale[0] = 0;
     ++(*result).numeroElementi;
   }
 
-  for(scorriArray=0;scorriArray<ARR_LENGHT;++scorriArray)
+  lunghezzaArray = contaElementi(toCode);
+
+  for(scorriArray=0;scorriArray<lunghezzaArray;++scorriArray)
   {
     contaElementiUguali = 0;
     daConfrontare = (*toCode)[scorriArray];
@@ -81,17 +85,17 @@ void rlc(arrayOriginale *toCode,listaFinale *result)
       ++contaElementiUguali;
     }
 
-    (*result).arrayFinale[(*result).numeroElementi] = (char)(contaElementiUguali+ZERO_ASCII);
+    (*result).arrayFinale[(*result).numeroElementi] = contaElementiUguali;
     ++(*result).numeroElementi;
 
     scorriArray=scorriUguali-1;
   }
 
-  /*while((*result).numeroElementi < ARR_LENGHT)
+  while((*result).numeroElementi < ARR_LENGHT)
   {
     (*result).arrayFinale[(*result).numeroElementi] = VUOTO;
     ++(*result).numeroElementi;
-  }*/
+  }
 }
 
 void leggiRLC(listaFinale *toPrint)
@@ -101,6 +105,19 @@ void leggiRLC(listaFinale *toPrint)
   printf("\nLa sequenza compressa in formato RLC e' : ");
   for(scorriLista=0;scorriLista<(*toPrint).numeroElementi;++scorriLista)
   {
-    printf("%c.",(*toPrint).arrayFinale[scorriLista]);
+    printf("%d.",(*toPrint).arrayFinale[scorriLista]);
   }
+}
+
+int contaElementi(arrayOriginale *toCount)
+{
+  contatore scorriArray;
+
+  scorriArray = 0;
+  while((*toCount)[scorriArray] != '\0')
+  {
+    ++scorriArray;
+  }
+
+  return (scorriArray);
 }
