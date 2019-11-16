@@ -44,4 +44,4 @@ Link ftp Ing. Giulio Fontana: ftp.elet.polimi.it/users/Giulio.Fontana/didattica
 
 Link ftp Ing. Alessandro Gabrielli: ftp.elet.polimi.it/users/ALESSANDRO.GABRIELLI/didattica
 
-[Comandi terminale utili](./comandi_terminale)
+[Comandi terminale utili](comandi_terminale.md)
