@@ -1,1 +1,0 @@
-clear && gcc contour_filling.c -o compiled && ./compiled

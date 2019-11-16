@@ -1,1 +1,0 @@
-clear && gcc calcolo_crf_area.c -o crf&area_compiled && ./crf&area_compiled

@@ -1,1 +1,0 @@
-clear && gcc $1 -o compiled && ./compiled

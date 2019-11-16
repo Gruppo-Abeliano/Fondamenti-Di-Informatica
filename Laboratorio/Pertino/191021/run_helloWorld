@@ -1,1 +1,0 @@
-clear && gcc hello_world.c -o helloWorld_compiled && ./helloWorld_compiled

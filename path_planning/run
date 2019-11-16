@@ -1,1 +1,0 @@
-clear && gcc path_planning.c -o compiled && ./compiled

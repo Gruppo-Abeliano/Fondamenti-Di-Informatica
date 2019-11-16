@@ -1,1 +1,0 @@
-clear && gcc Esercizio2.c -o compiled && ./compiled
