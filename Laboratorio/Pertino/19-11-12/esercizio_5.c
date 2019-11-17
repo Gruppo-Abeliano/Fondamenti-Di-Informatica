@@ -42,8 +42,6 @@ int main(int argc, char const *argv[]) {
   {
     minimo = Minimo(&Lista);
     printf("\nIl carattere minimo della lista e' %c.",minimo);
-  } else {
-    printf("\nLa lista e' vuota.");
   }
 
   return 0;
@@ -61,8 +59,10 @@ void compilaLista(TipoL *toCompile)
   {
     printf("\nInserisci il %d carattere nella lista : ",ScorriLista+1);
     scanf("%c%*c",&((*toCompile).Caratteri[(*toCompile).numeroElementi]));
-
-    if ((*toCompile).Caratteri[(*toCompile).numeroElementi] < 'a' || (*toCompile).Caratteri[(*toCompile).numeroElementi] > 'z') {
+    if((*toCompile).Caratteri[(*toCompile).numeroElementi] == TERMINATORE)
+    {
+      printf("\nFine inserimento.");
+    } else if ((*toCompile).Caratteri[(*toCompile).numeroElementi] < 'a' || (*toCompile).Caratteri[(*toCompile).numeroElementi] > 'z') {
       printf("\nIl carattere inserito non e' valido ed e' stato ignorato.");
     } else {
       ++(*toCompile).numeroElementi;
