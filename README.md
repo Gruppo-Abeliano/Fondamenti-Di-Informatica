@@ -40,8 +40,8 @@ N.B. Qualunque file chiamato ```compiled``` verrà ignorato da .gitignore
 
 ## Note utili
 
-Link ftp Ing. Giulio Fontana: ftp.elet.polimi.it/users/Giulio.Fontana/didattica
+Link ftp Ing. Giulio Fontana: ftp://ftp.elet.polimi.it/users/Giulio.Fontana/didattica
 
-Link ftp Ing. Alessandro Gabrielli: ftp.elet.polimi.it/users/ALESSANDRO.GABRIELLI/didattica
+Link ftp Ing. Alessandro Gabrielli: ftp://ftp.elet.polimi.it/users/ALESSANDRO.GABRIELLI/didattica
 
 [Comandi terminale utili](comandi_terminale.md)
