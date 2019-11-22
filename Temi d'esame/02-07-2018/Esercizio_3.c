@@ -19,46 +19,49 @@ typedef struct
   Contatore numeroElementi;
 } ListaConversione;
 
-ListaConversione Converti(int numero,int base,ListaConversione NumeroConvertito);
+ListaConversione Converti(int numero, int base, ListaConversione NumeroConvertito);
 void leggiLista(ListaConversione toRead);
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[])
+{
   int numeroDaConvertire;
   int baseConversione;
   ListaConversione numeroConvertito;
 
   //INPUT PHASE
   printf("Inserisci il numero da convertire : ");
-  scanf("%d",&numeroDaConvertire);
+  scanf("%d", &numeroDaConvertire);
 
   printf("Inserisci la base in cui vuoi convertire il numero : ");
-  scanf("%d",&baseConversione);
+  scanf("%d", &baseConversione);
 
   //ELABORAZIONE DATI
   numeroConvertito.numeroElementi = 0;
-  numeroConvertito = Converti(numeroDaConvertire,baseConversione,numeroConvertito);
+  numeroConvertito = Converti(numeroDaConvertire, baseConversione, numeroConvertito);
 
   //OUTPUT PHASE
   leggiLista(numeroConvertito);
   return 0;
 }
 
-ListaConversione Converti(int numero,int base,ListaConversione NumeroConvertito)
+ListaConversione Converti(int numero, int base, ListaConversione NumeroConvertito)
 {
-  if(numero/base > 0)
+  if (numero / base > 0)
   {
     /*
       Prima di inserire il mio(numero%base) resto, lo faccio inserire e chi è più piccolo di me
     */
-    NumeroConvertito = Converti(numero/base,base,NumeroConvertito);
+    NumeroConvertito = Converti(numero / base, base, NumeroConvertito);
 
     /*
       Una volta fatto posso inserire il mio resto subito dopo.
     */
-    NumeroConvertito.numero[NumeroConvertito.numeroElementi] = numero%base;
+    NumeroConvertito.numero[NumeroConvertito.numeroElementi] = numero % base;
     ++NumeroConvertito.numeroElementi;
-  } else {
-    NumeroConvertito.numero[NumeroConvertito.numeroElementi] = numero%base;
+  }
+  else
+  {
+    NumeroConvertito.numero[NumeroConvertito.numeroElementi] = numero % base;
     ++NumeroConvertito.numeroElementi;
   }
 
@@ -70,9 +73,9 @@ void leggiLista(ListaConversione toRead)
   Contatore scorriLista;
 
   scorriLista = 0;
-  while(scorriLista<toRead.numeroElementi)
+  while (scorriLista < toRead.numeroElementi)
   {
-    printf("|%d|",toRead.numero[scorriLista]);
+    printf("|%d|", toRead.numero[scorriLista]);
     ++scorriLista;
   }
 }

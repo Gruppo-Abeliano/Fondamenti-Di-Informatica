@@ -15,8 +15,9 @@ typedef int Contatore;
 
 int MassimaLunghezza(arrayInteri vettore);
 
-int main(int argc, char const *argv[]) {
-  arrayInteri array = {3,2,8,4,5,7,8,9,11,21};
+int main(int argc, char const *argv[])
+{
+  arrayInteri array = {3, 2, 8, 4, 5, 7, 8, 9, 11, 21};
 
   printf("La sequenza di numeri disposti in ordine crescente piu' lunga inizia all'indice %d", MassimaLunghezza(array));
   return 0;
@@ -24,28 +25,28 @@ int main(int argc, char const *argv[]) {
 
 int MassimaLunghezza(arrayInteri vettore)
 {
-  Contatore scorriArray,scorriArrayTemp,lunghMax,lunghMaxTemp;
+  Contatore scorriArray, scorriArrayTemp, lunghMax, lunghMaxTemp;
   int indiceReturn;
 
   indiceReturn = 0;
   scorriArray = 0;
   lunghMax = 0;
 
-  while(scorriArray<DIM-1)
+  while (scorriArray < DIM - 1)
   {
     lunghMaxTemp = 0;
-    if(vettore[scorriArray]<=vettore[scorriArray+1])
+    if (vettore[scorriArray] <= vettore[scorriArray + 1])
     {
-      scorriArrayTemp = scorriArray+1;
+      scorriArrayTemp = scorriArray + 1;
       ++lunghMaxTemp;
-      while((scorriArrayTemp<DIM-1) && (vettore[scorriArrayTemp]<=vettore[scorriArrayTemp+1]))
+      while ((scorriArrayTemp < DIM - 1) && (vettore[scorriArrayTemp] <= vettore[scorriArrayTemp + 1]))
       {
         ++lunghMaxTemp;
         ++scorriArrayTemp;
       }
     }
 
-    if(lunghMaxTemp>lunghMax)
+    if (lunghMaxTemp > lunghMax)
     {
       lunghMax = lunghMaxTemp;
       indiceReturn = scorriArray;
