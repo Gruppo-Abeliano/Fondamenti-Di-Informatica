@@ -1,0 +1,3 @@
+ESERCIZIO LISTE DINAMICHE (Tema esame);
+ESERCIZIO Cancellare elemento centrale lista dinamica ### SENZA UTILIZZO DOPPI PUNTATORI ###
+ESERCIZIO Cancellare elemento centrale lista dinamica ### CON UTILIZZO DOPPI PUNTATORI ###
