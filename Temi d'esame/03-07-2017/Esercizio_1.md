@@ -1,10 +1,10 @@
-##Quesito 1
+#Quesito 1
 
-#Testo
+##Testo
 a - Rappresentare in base 2 il numero decimale 0.6
 b - Sapendo che 0.6 è pari a 3/5, calcolare la rappresentazione in virgola mobile del numero 3/40
 
-#Svolgimento
+##Svolgimento
 
 a)
 0.6 * 2 = 1.2  --- 1 ---  (1.2-1=0.2)
@@ -35,6 +35,3 @@ b) 3/40 -- Devo cercare una potenza di 2 che mi fornisca, moltiplicata al valore
   -> 01111011
 
 #Risposta (b) = [3/40]dec = [ 0 | 01111011 | 00110011001100110011001 ]IEEE754 singola precisione
-                              ^       ^                 ^
-                              |       |                 |
-                              SEGNO   EXP            MANTISSA
