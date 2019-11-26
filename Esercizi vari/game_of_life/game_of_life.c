@@ -4,7 +4,7 @@
 /**
  * Autore: Alberto Nidasio
  * Scopo: Implementare il "Game of Life" di Conway 
- * Note: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+ * Link: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
  * 
  * Regole del gioco:
  * - Il campo viene inizializzato random e le celle possono essere o vive o morte
