@@ -32,9 +32,9 @@ Per l'esecuzione dei programmi creati può essere comodo inserire un file esegui
 clear && gcc $1 -o compiled && ./compiled
 ```
 
-In questo modo per compilare ed avvire il proprio programma basterà eseguire ```./run path_to_file```
+In questo modo per compilare ed avvire il proprio programma basterà eseguire ```./run.sh path_to_file parametri_per_il_programma```
 
-E' possibile trovare questo file nella root della master branch (oppure è possibile crearlo e renderlo eseguibile tramite ```chmod +x run```)
+E' possibile trovare questo file nella root della master branch (oppure è possibile crearlo e renderlo eseguibile tramite ```chmod +x run.sh```)
 
 N.B. Qualunque file chiamato ```compiled``` verrà ignorato da .gitignore
 
