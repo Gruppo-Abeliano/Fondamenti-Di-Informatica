@@ -4,7 +4,7 @@
   Descrizione : data una lista dinamica di interi, la funzione elementiPosPari crea una nuova lista dinamica contenente
                 gli elementi situati in posizione pari della lista di partenza.
 
-  Tempo impiegato : 14 minuti __ scrittura funzione generaMantissa
+  Tempo impiegato : 14 minuti __ scrittura funzione elementiPosPari
 */
 
 
