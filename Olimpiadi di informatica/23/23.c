@@ -7,7 +7,7 @@
 
 // input data
 int T, i, j, k, l, T_copia;
-int N[MAXT];
+long N[MAXT];
 
 #define DEBUG
 
@@ -67,7 +67,7 @@ int main()
 {
     // Leggo da file mentre sviluppo il codice (altrimenti il programma legge i valori da tastiera)
 #ifdef DEBUG
-    freopen("ois_23/input1.txt", "r", stdin);
+    freopen("ois_23/input0.txt", "r", stdin);
 #endif // DEBUG
 
     // Leggo quanti numeri dovrò controllare
@@ -88,7 +88,7 @@ int main()
     // RISOLUZIONE
 
     // 1: Copio i dati in ingresso in un nuovo arrau e rimuovo eventuali doppioni
-    int N_copia[T][3]; // [0] = numero, [1] = numero di numeri speciari rispetto a [0], [2] = somma delle cifre del numero [0]
+    long N_copia[T][3]; // [0] = numero, [1] = numero di numeri speciari rispetto a [0], [2] = somma delle cifre del numero [0]
     j = 0;
     for (i = 0; i < T; i++)
     {

@@ -1,1 +1,1 @@
-clear && gcc -Wall $1 -o compiled && ./compiled ${@:2}
+clear && gcc -Wall $1 -o compiled -lm && ./compiled ${@:2}
