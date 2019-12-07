@@ -17,6 +17,7 @@ Si consideri il seguente programma C. Allo studente è richiesto di:
     char B[MAX] = "000000";    /* @@@ */
     char C[2*MAX];
     M(A, B, C);
+    printf("%s", C);
     return 0;
   }
 
@@ -28,7 +29,7 @@ Si consideri il seguente programma C. Allo studente è richiesto di:
       return;
     }
 
-    if ('\0' != *S2)
+    if ('\0' != *S1)
     {
       *S3 = *S1;
       ++S1;
@@ -51,4 +52,4 @@ Si consideri il seguente programma C. Allo studente è richiesto di:
   N.B. : non viene stampato il carattere \0 perchè scanf legge la stringa fino a tale carattere escludendolo.
 
 
-  Tempo esecuzione : 5 minuti. 
+  Tempo esecuzione : 5 minuti.
