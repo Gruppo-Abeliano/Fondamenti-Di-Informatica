@@ -19,9 +19,22 @@ typedef enum{false,true}bool;
   Lista dinamica con numero ricorrenze
 */
 Lista contaOccorrenze(FILE *Stream);
+void leggiLista(Lista daLeggere);
 
 int main(int argc, char const *argv[]) {
-  /* code */
+  FILE *fInput;
+  Lista ListaCompleta;
+
+  fInput = fopen(INPUT_FILE,"rb");
+  if(fInput == NULL)
+  {
+    printf("\nErrore nell'apertura del file.");
+    return 1;
+  }
+
+  ListaCompleta = contaOccorrenze(fInput);
+  leggiLista(ListaCompleta);
+
   return 0;
 }
 
@@ -68,4 +81,13 @@ Lista contaOccorrenze(FILE *Stream)
   } while(risultatoLettura==1);
 
   return testaLista;
+}
+
+void leggiLista(Lista daLeggere)
+{
+  while(daLeggere != NULL)
+  {
+    printf("\n%d%d",daLeggere->valore,daLeggere->numRicorrenze);
+    daLeggere = daLeggere->pProx;
+  }
 }
