@@ -1,11 +1,8 @@
 /*
   Autore : Paolo Pertino
-  Esercizio 4 - Tema Esame 28-01-2019
   Descrizione : date due liste dinamica di numeri reali tali che essi siano disposti in ordine crescente in entrambe
                 le liste e che non vi siano elementi uguali nelle due liste, la funzione Fondi(ricorsiva) crea una nuova
                 lista dinamica contenente gli elementi delle due liste di partenza fuse insieme, ancora in ordine crescente.
-
-  Tempo impiegato : 27 minuti __ scrittura funzione Fondi
 */
 
 #include <stdio.h>
@@ -18,7 +15,7 @@ typedef struct ELEMENTO
 } ElemLista;
 typedef ElemLista *Lista;
 
-void Fondi(Lista l1,Lista l2,Lista *pL);
+Lista Fondi(Lista l1,Lista l2);
 void aggiungiElemento(Lista *toCompile, float Elemento);
 void mostraLista(Lista toRead);
 
@@ -32,51 +29,60 @@ int main(int argc, char const *argv[]) {
 
   do
   {
-    printf("LISTA 1 - Inserisci un numero : (STOP quando numero < 0) ");
+    printf("LISTA 1 - Inserisci un numero : (per stoppare l'inserimento inserire 1000) ");
     scanf("%f", &toAdd);
-    if (toAdd >= 0)
+    if (toAdd != 1000)
       aggiungiElemento(&l1, toAdd);
-  } while (toAdd >= 0);
+  } while (toAdd != 1000);
 
   do
   {
-    printf("LISTA 2 - Inserisci un numero : (STOP quando numero < 0) ");
+    printf("LISTA 2 - Inserisci un numero : (per stoppare l'inserimento inserire 1000) ");
     scanf("%f", &toAdd);
-    if (toAdd >= 0)
+    if (toAdd != 1000)
       aggiungiElemento(&l2, toAdd);
-  } while (toAdd >= 0);
+  } while (toAdd != 1000);
 
   printf("\n\nLista 1 :\n");
   mostraLista(l1);
   printf("\n\nLista 2 :\n");
   mostraLista(l2);
 
-  Fondi(l1,l2,&listaOrdinata);
+  listaOrdinata = Fondi(l1,l2);
 
   printf("\n\nLista Ordinata :\n");
   mostraLista(listaOrdinata);
   return 0;
 }
 
-void Fondi(Lista l1,Lista l2,Lista *pL)
+Lista Fondi(Lista l1,Lista l2)
 {
   Lista punt;
-  if(l1==NULL && l2==NULL) return;
+  if(l1==NULL && l2==NULL) return NULL;
 
-  if(l1!=NULL && ((l2==NULL || (l1->numero < l2->numero))))
+  punt = malloc(sizeof(ElemLista));
+  if(l1!=NULL)
   {
-    punt = malloc(sizeof(ElemLista));
-    punt->numero = l1->numero;
-    punt->pProx = NULL;
-    *pL = punt;
-    Fondi(l1->pProx,l2,&((*pL)->pProx));
-  } else if(l2!=NULL && ((l1==NULL) || (l2->numero < l1->numero))){
-    punt = malloc(sizeof(ElemLista));
+    if(l2!=NULL)
+    {
+      if(l1->numero<l2->numero)
+      {
+        punt->numero = l1->numero;
+        punt->pProx = Fondi(l1->pProx,l2);
+      } else {
+        punt->numero = l2->numero;
+        punt->pProx = Fondi(l1,l2->pProx);
+      }
+    } else {
+      punt->numero = l1->numero;
+      punt->pProx = Fondi(l1->pProx,NULL);
+    }
+  } else {
     punt->numero = l2->numero;
-    punt->pProx = NULL;
-    *pL = punt;
-    Fondi(l1,l2->pProx,&((*pL)->pProx));
+    punt->pProx = Fondi(NULL,l2->pProx);
   }
+
+  return punt;
 }
 
 void aggiungiElemento(Lista *toCompile, float Elemento)
