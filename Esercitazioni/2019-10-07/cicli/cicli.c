@@ -88,5 +88,5 @@ void quadratoDoWhile(float num)
 
 void clearScreen()
 {
-  system("cls");
+  system("clear||cls");
 }
