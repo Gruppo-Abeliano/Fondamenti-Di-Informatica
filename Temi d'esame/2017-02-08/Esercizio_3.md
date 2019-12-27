@@ -5,7 +5,7 @@ Cosa stampa a schermo il seguente programma?
 ``` bash
 #include <stdio.h>
 
-void Funz(char *S):
+void Funz(char *S);
 
 int main()
 {
