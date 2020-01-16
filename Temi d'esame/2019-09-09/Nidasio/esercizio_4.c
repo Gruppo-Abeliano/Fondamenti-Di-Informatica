@@ -5,7 +5,7 @@ typedef struct ElementoLista
 {
     int numero;
     struct ElementoLista *next;
-} Lista;
+} *Lista;
 
 void leggiLista(Lista *testa);
 void stampaLista(Lista lista);
