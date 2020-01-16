@@ -1,3 +1,12 @@
+/*
+  Autore: Paolo Pertino
+  Esercizio 2 - Tema Esame 04-09-2018
+
+  Descrizione:  Si scriva un sottoprogramma ricorsivo, avente prototipo void RicBubbleSort (float Arr[], int N),
+                che effettui l’ordinamento mediante l’algoritmo di BubbleSort* (ordinamento a bolle)
+                di un array di float ricevuto in ingresso.
+*/
+
 #include <stdio.h>
 
 #define DIMENSIONE 5
