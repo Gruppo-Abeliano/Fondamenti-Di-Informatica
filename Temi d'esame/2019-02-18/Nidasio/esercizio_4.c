@@ -16,7 +16,7 @@ float calcolaMedia(Lista testa);
 int main()
 {
     printf("hey\n");
-    
+
     Lista lista = NULL;
 
     leggiLista(&lista);
@@ -27,6 +27,8 @@ int main()
     float media = calcolaMedia(lista);
 
     printf("La media dei numeri nella lista (contati singolarmente) è: %f\n", media);
+
+    return 0;
 }
 
 void leggiLista(Lista *testa)
@@ -99,7 +101,7 @@ float calcolaMedia(Lista testa)
         }
 
         // Ora che so se devo memorizzare il numero posso aggiungerlo alla somma
-        if(daMemorizzare)
+        if (daMemorizzare)
         {
             sommaNumeri += corridore1->numero;
             countNumeri++;
@@ -110,6 +112,6 @@ float calcolaMedia(Lista testa)
     }
 
     // Ora che ho controllato tutti i numeri posso calcolare la media e darla come risultato
-    media = (float) sommaNumeri / countNumeri;
+    media = (float)sommaNumeri / countNumeri;
     return media;
 }

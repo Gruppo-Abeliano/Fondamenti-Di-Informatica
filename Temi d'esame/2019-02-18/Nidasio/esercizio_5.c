@@ -12,6 +12,8 @@ int main()
     int risultato = controllaFile(nomeFile1, nomeFile2);
 
     printf("Risultato del controllo: %d\n", risultato);
+
+    return 0;
 }
 
 int controllaFile(char *nomeFile1, char *nomeFile2)
@@ -45,12 +47,15 @@ int controllaFile(char *nomeFile1, char *nomeFile2)
         else if (check1 && check2)
         {
             // In questo caso ad entrambi i file sono stati letti un byte che posso confrontarte
-            if (byteFile1 != byteFile2) uguali = false; // Se sono differenti segno i file come diversi, questo concluderà il ciclo
-        } else {
+            if (byteFile1 != byteFile2)
+                uguali = false; // Se sono differenti segno i file come diversi, questo concluderà il ciclo
+        }
+        else
+        {
             // Altrimenti uno dei due file è finito prima, questo implica che sono diversi
             uguali = false;
         }
-    } while(uguali && !fineControllo);
+    } while (uguali && !fineControllo);
 
     // Arrivati a questo punto la variabile uguali indica se i due file sono uguali, posso chiuderli e restituire il risultato
     fclose(file1);
