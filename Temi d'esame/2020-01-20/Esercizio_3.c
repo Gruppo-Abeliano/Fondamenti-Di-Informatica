@@ -6,7 +6,7 @@
 typedef int arrayInteri[DIMENSIONE];
 typedef struct EL
 {
-  int pArray;
+  int *pArray;
   struct EL *pProx;
 } Nodo;
 typedef Nodo *Lista;
@@ -56,7 +56,7 @@ void MaxLoc(arrayInteri arr,int dimensione,Lista *pTesta)
     if(arr[dimensione] > arr[dimensione+1])
     {
       (*pTesta) = malloc(sizeof(Nodo));
-      (*pTesta)->pArray = (arr[dimensione]);
+      (*pTesta)->pArray = &(arr[dimensione]);
       (*pTesta)->pProx = NULL;
     }
     return;
@@ -65,7 +65,7 @@ void MaxLoc(arrayInteri arr,int dimensione,Lista *pTesta)
     if(arr[dimensione] > arr[dimensione-1])
     {
       (*pTesta) = malloc(sizeof(Nodo));
-      (*pTesta)->pArray = (arr[dimensione]);
+      (*pTesta)->pArray = &(arr[dimensione]);
       (*pTesta)->pProx = NULL;
       MaxLoc(arr,dimensione-1,&((*pTesta)->pProx));
     } else {
@@ -75,7 +75,7 @@ void MaxLoc(arrayInteri arr,int dimensione,Lista *pTesta)
     if((arr[dimensione] > arr[dimensione+1]) && (arr[dimensione] > arr[dimensione-1]))
     {
       (*pTesta) = malloc(sizeof(Nodo));
-      (*pTesta)->pArray = (arr[dimensione]);
+      (*pTesta)->pArray = &(arr[dimensione]);
       (*pTesta)->pProx = NULL;
       MaxLoc(arr,dimensione-1,&((*pTesta)->pProx));
     } else {
@@ -88,7 +88,7 @@ void mostraMassimi(Lista list)
 {
   while(list != NULL)
   {
-    printf("%d",(list->pArray));
+    printf("%d",*(list->pArray));
     list = list->pProx;
   }
 }
