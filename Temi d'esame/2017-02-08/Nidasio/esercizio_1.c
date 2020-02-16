@@ -1,65 +1,65 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+/**
+ * Funzionamento:
+ * La funzione, supponendo che il file sia aperto correttamente, legge un elemento alla volta finchè non finisce il file.
+ * Per ogni elemento letto scorre la lista controllando se è già presente. In caso positivo incrementa il contatore,
+ * in caso negativo appende un elemento alla lista.
+*/
 
 typedef struct ElementoLista
 {
     struct ElementoLista *next;
-    int numero;
+    int valore;
     int occorrenze;
 } * Lista;
 
 void stampaLista(Lista lista);
-Lista analizzaFile(FILE *daLeggere);
+Lista leggiOccorrenze(FILE *file);
 
 int main()
 {
     FILE *file = fopen("input_esercizio_1.c", "r");
 
-    Lista lista = analizzaFile(file);
+    Lista lista = leggiOccorrenze(file);
 
     stampaLista(lista);
 
     return 0;
 }
 
-Lista analizzaFile(FILE *daLeggere)
+Lista leggiOccorrenze(FILE *file)
 {
     Lista testa = NULL;
     Lista *corridore;
-    int tmp;
+    int input;
+    bool trovato;
 
     // Leggo il file finchè è possibile aggiornando la lista di conseguenza
-    while (fscanf(daLeggere, "%d", &tmp) != EOF)
+    while (fscanf(file, "%d", &input) != EOF)
     {
-        // Se la testa della lista è nulla la inizializzo
-        if (testa == NULL)
+        // Controllo se è già presente l'elemento nella lista
+        corridore = &testa;
+        trovato = false;
+
+        while (*corridore != NULL && !trovato)
         {
-            testa = malloc(sizeof(struct ElementoLista));
-            testa->numero = tmp;
-            testa->occorrenze = 1;
+            if ((*corridore)->valore == input)
+            {
+                trovato = true;
+                (*corridore)->occorrenze++;
+            }
+            corridore = &(*corridore)->next;
         }
-        else
+
+        // Se non ho già trovato l'elemento allora lo aggiungo
+        if (!trovato)
         {
-            // Controllo se l'elemento è già presente
-            corridore = &testa;
-
-            while (*corridore != NULL)
-            {
-                if ((*corridore)->numero == tmp)
-                {
-                    (*corridore)->occorrenze++;
-                    break;
-                }
-                corridore = &(*corridore)->next;
-            }
-
-            if (*corridore == NULL)
-            {
-                // Nonn ho trovato l'elemento, lo creo
-                *corridore = malloc(sizeof(struct ElementoLista));
-                (*corridore)->numero = tmp;
-                (*corridore)->occorrenze = 1;
-            }
+            *corridore = malloc(sizeof(struct ElementoLista));
+            (*corridore)->valore = input;
+            (*corridore)->occorrenze = 1;
         }
     }
 
@@ -70,7 +70,7 @@ void stampaLista(Lista lista)
 {
     while (lista != NULL)
     {
-        printf("['%d',%d]\n", lista->numero, lista->occorrenze);
+        printf("['%d',%d]\n", lista->valore, lista->occorrenze);
         lista = lista->next;
     }
 }

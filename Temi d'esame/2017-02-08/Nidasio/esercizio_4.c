@@ -30,7 +30,7 @@ Boolean controllaSimmetria(Matrice matrice, int i)
     int j;
 
     // Se siamo arrivati alla fine dell'array restituisco true
-    if (i == N)
+    if (i == N - 1)
         return TRUE;
 
     // Controllo la i-esima riga e la i-esima colonna partendo alla i esima posizione e poi passo alla successiva
@@ -38,5 +38,5 @@ Boolean controllaSimmetria(Matrice matrice, int i)
         if (matrice[j][i] != matrice[i][j])
             return FALSE;
 
-    return controllaSimmetria(matrice, ++i);
+    return controllaSimmetria(matrice, i + 1);
 }
